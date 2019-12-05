@@ -17,10 +17,12 @@ class Teachers extends React.Component {
     this.getAllTeachers();
     
   }
+
   state = {
     teachers:[],
     newTeacherName:''
   }
+
   onTypeName = (event) => {
     this.setState({newTeacherName:event.target.value})
     console.log(this.state)
@@ -36,7 +38,6 @@ class Teachers extends React.Component {
       }
     )
   }
-
  
   render() {
     console.log(this.state)

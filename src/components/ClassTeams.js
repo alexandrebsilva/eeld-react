@@ -5,20 +5,23 @@ import api from '../services/api';
 class ClassTeams extends React.Component {
 
   getAllClassTeams = () => {
-    api.get('/classTeams').
+    api.get('/allClassTeams').
       then((resp)=>{
         console.log(resp.data)
-        this.setState({classTeams:resp.data.docs});
+        this.setState({classTeams:resp.data});
       }
     )
   }
+
   componentDidMount(){
     this.getAllClassTeams();
-    
+    console.log(this.state)
   }
+
   state = {
     classTeams:[],
-    newClassTeamName:''
+    newClassTeamName:'',
+    students:[]
   }
   onTypeName = (event) => {
     this.setState({newClassTeamName:event.target.value})
@@ -29,7 +32,7 @@ class ClassTeams extends React.Component {
     api.post('/classTeams',{
       name:this.state.newClassTeamName
     }).then(
-      ()=>{
+      () => {
         this.setState({newClassTeamName:''});
         this.getAllClassTeams(); 
       }

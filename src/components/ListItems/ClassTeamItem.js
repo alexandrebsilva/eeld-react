@@ -8,10 +8,11 @@ class ClassTeamItem extends React.Component{
     }
     render(){
         return <tr> 
-                    <th scope="row"><a href="turmas/detalhe/{this.props.id}">{this.props.id}</a></th>
+                    <th scope="row"><a href="/{this.props.id}">{this.props.id}</a></th>
                     <td>{this.props.name}</td>
                     <td>
                         <button className="btn btn-danger" onClick={this.delete}>Excluir</button>
+                        <a href={'/turmas/'+this.props.id} className=" ml-1 btn btn-success">Visualizar</a>
                     </td>
                 </tr>
     }

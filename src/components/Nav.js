@@ -7,9 +7,6 @@ function Nav() {
     <a className="nav-link" href="/">home</a>
   </li>
   <li className="nav-item">
-    <a className="nav-link" href="/dash">Dashboard</a>
-  </li>
-  <li className="nav-item">
     <a className="nav-link" href="/turmas">Turmas</a>
   </li>
   <li className="nav-item">
