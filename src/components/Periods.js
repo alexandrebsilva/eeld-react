@@ -1,40 +1,64 @@
-import React from 'react';
-import api from '../services/api'
+import React  from 'react';
 
 class Periods extends React.Component {
-  
-  getAllPeriods = (page = 1) => {
-    api.get('/students?page='+page).
-      then((resp)=>{
-        this.setState({students:resp.data.docs});
+
+  render(){
+    return <h1>Periodos</h1>;
+  }
+/*
+  //nessa requisição se define a pagina para exibir
+  getAllStudents = (page = 1) => {
+    api.get('/allPeriods').then((resp)=>{
+        this.setState({periods:resp.data.docs});
       }
     )
   }
-  /*render() {
+  componentDidMount(){
+    this.getAllStudents();
+    
+  }
+  state = {
+    periods:[],
+    newPeriodName:''
+  }
+  onTypeName = (event) => {
+    this.setState({newPeriodName:event.target.value})
+    console.log(this.state)
+  }
+  saveStudentHandler = (event) => {
+    event.preventDefault();
+    api.post('/periods',{
+      name:this.state.newPeriodName
+    }).then(
+      ()=>{
+        this.setState({newStudentName:''});
+        this.getAllStudents(); 
+      }
+    )
+  }
+
+  render() {
     return <div>
+      <h1>testes</h1>
       <form>
-        <input placeholder="Nome do aluno" name="name" onChange={this.onTypeName} value={this.state.newStudentName}></input>
-        <button onClick={this.saveStudentHandler}>Cadastrar</button>
+        <input placeholder="hora inicial" name="name" ></input>
+        <button >Cadastrar</button>
       </form>
       <table className="table">
         <thead>
           <tr>
             <th scope="col">ID</th>
-            <th scope="col">Nome</th>
+            <th scope="col">Hora inicial</th>
+            <th scope="col">Hora final</th>
             <th scope="col">Ações</th>
           </tr>
         </thead>
         <tbody>
-          {
-            this.state.students.map((student)=>(
-              <StudentItem key={student._id} name={student.name} id={student._id}/>
-              
-            ))
-          }
         </tbody>
       </table>
     </div>;
-  }*/
+  }
+}*/
 }
 
 export default Periods;

@@ -5,6 +5,7 @@ import api from '../../services/api'
 
 class ClassTeam extends React.Component {
     componentDidMount(){
+        console.log()
         const { handle } = this.props.match.params;
         console.log(handle)
     }

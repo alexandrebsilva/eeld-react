@@ -7,8 +7,7 @@ class Students extends React.Component {
 
   //nessa requisição se define a pagina para exibir
   getAllStudents = (page = 1) => {
-    api.get('/students?page='+page).
-      then((resp)=>{
+    api.get('/students?page='+page).then((resp)=>{
         this.setState({students:resp.data.docs});
       }
     )
