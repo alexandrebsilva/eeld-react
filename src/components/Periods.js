@@ -26,7 +26,7 @@ class Periods extends React.Component {
     this.setState({newPeriodInicio:event.target.value})
     console.log(this.state)
   }
-  
+
   onTypeFim = (event) => {
     this.setState({newPeriodFim:event.target.value})
     console.log(this.state)
@@ -59,7 +59,6 @@ class Periods extends React.Component {
         this.getAllPeriods();
       }
     )
-    //window.location.reload();
 }
 
  
