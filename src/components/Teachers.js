@@ -1,5 +1,4 @@
 import React from 'react';
-import TeacherItem from './ListItems/TeacherItem'
 import api from '../services/api';
 
 class Teachers extends React.Component {
@@ -15,7 +14,6 @@ class Teachers extends React.Component {
   }
   componentDidMount(){
     this.getAllTeachers();
-    
   }
 
   state = {
@@ -27,6 +25,7 @@ class Teachers extends React.Component {
     this.setState({newTeacherName:event.target.value})
     console.log(this.state)
   }
+
   saveTeacherHandler = (event) => {
     event.preventDefault();
     api.post('/teachers',{
@@ -38,7 +37,14 @@ class Teachers extends React.Component {
       }
     )
   }
- 
+  deleteTeacherHandler = (event) =>{
+    api.delete('/teachers/'+event.target.value).then(
+      () => {
+        this.getAllTeachers();
+      }
+    );
+}
+
   render() {
     console.log(this.state)
     return <div>
@@ -59,7 +65,13 @@ class Teachers extends React.Component {
         <tbody>
         {
         this.state.teachers.map((teacher)=>(
-          <TeacherItem key={teacher._id} name={teacher.name} id={teacher._id}/>
+          <tr> 
+                    <th scope="row">{teacher._id}</th>
+                    <td>{teacher.name}</td>
+                    <td>
+                        <button className="btn btn-danger" value={teacher._id} onClick={this.deleteTeacherHandler}>Excluir</button>
+                    </td>
+                </tr>
         ))
       }
         </tbody>
@@ -69,10 +81,3 @@ class Teachers extends React.Component {
 }
 
 export default Teachers;
-
-/*{
-  this.state.teachers.map((teacher)=>(
-    <TeacherItem key={teacher._id} name={teacher.name} id={teacher._id}/>
-    
-  ))
-}*/

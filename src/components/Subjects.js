@@ -1,5 +1,4 @@
 import React from 'react';
-import SubjectItem from './ListItems/SubjectItem'
 import api from '../services/api';
 
 class Subjects extends React.Component {
@@ -30,13 +29,21 @@ class Subjects extends React.Component {
     api.post('/subjects',{
       name:this.state.newSubjectName
     }).then(
-      ()=>{
+      (resp)=>{
         this.setState({newSubjectName:''});
         this.getAllSubjects(); 
       }
     )
   }
 
+  deleteSubjectHandler = (event) =>{
+    api.delete('/subjects/'+event.target.value).then((resp)=>{
+      this.getAllSubjects();
+    })
+    
+    //isso nao pode nunca acontecer
+    //window.location.reload();
+}
  
   render() {
     console.log(this.state.subjects)
@@ -56,7 +63,13 @@ class Subjects extends React.Component {
         <tbody>
         {
         this.state.subjects.map((subject)=>(
-          <SubjectItem key={subject._id} name={subject.name} id={subject._id}/>
+          <tr> 
+                    <th scope="row">{subject._id}</th>
+                    <td>{subject.name}</td>
+                    <td>
+                        <button className="btn btn-danger" value={subject._id} onClick={this.deleteSubjectHandler}>Excluir</button>
+                    </td>
+                </tr>
         ))
       }
         </tbody>
@@ -66,10 +79,3 @@ class Subjects extends React.Component {
 }
 
 export default Subjects;
-
-/*{
-  this.state.subjects.map((subject)=>(
-    <SubjectItem key={subject._id} name={subject.name} id={subject._id}/>
-    
-  ))
-}*/

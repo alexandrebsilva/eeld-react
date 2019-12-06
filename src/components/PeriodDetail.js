@@ -71,11 +71,7 @@ class PeriodDetail extends React.Component {
     )
   }
   
-  removeSession = (event) => {
-    api.delete('/sessions/'+event.target.value)
-    this.forceUpdate();
-    console.log(event.target.value + ' sessao excluida')
-  }
+  
   componentDidMount(){
     this.getSessionsById();
     this.getPeriodDetail();
@@ -97,19 +93,28 @@ changeSubject = (event) => {
 }
 
 createAula = () => {
-  console.log(this.state.newClassTeam)
   api.post('/sessions',{
     periodo_id:this.state.periodo_id,
     teacher:this.state.newTeacher,
     classTeam:this.state.newClassTeam,
     subject:this.state.newSubject,
   }).then(
-      (resp)=>{console.log(resp)
+      (resp)=>{console.log(resp);
+      this.getSessionsById();
     })
   this.setState({newTeacher:''})
   this.setState({newClassTeam:''})
   this.setState({newSubject:''})
 }
+
+removeSession = (event) => {
+  api.delete('/sessions/'+event.target.value).then((resp)=>{
+    this.getSessionsById();
+  })
+  //not working! WTF?
+  console.log(event.target.value + ' sessao excluida')
+}
+
     render() {
       return(
         <div>

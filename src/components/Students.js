@@ -1,14 +1,20 @@
 import React from 'react';
-import StudentItem from './ListItems/StudentItem'
 import api from '../services/api';
 
 class Students extends React.Component {
 
 
   //nessa requisição se define a pagina para exibir
-  getAllStudents = (page = 1) => {
+  //por questao de simplificação de tempo de entrega, paginação nao será implantada
+  /*getAllStudents = (page = 1) => {
     api.get('/students?page='+page).then((resp)=>{
         this.setState({students:resp.data.docs});
+      }
+    )
+  }*/
+  getAllStudents = () => {
+    api.get('/allStudents').then((resp)=>{
+        this.setState({students:resp.data});
       }
     )
   }
@@ -35,7 +41,13 @@ class Students extends React.Component {
       }
     )
   }
-
+  deleteStudentHandler = (event) =>{
+    api.delete('/students/'+event.target.value).then(
+      ()=>{
+        this.getAllStudents(); 
+      }
+    )
+}
   render() {
     return <div>
       <hr/>
@@ -55,8 +67,13 @@ class Students extends React.Component {
         <tbody>
           {
             this.state.students.map((student)=>(
-              <StudentItem key={student._id} name={student.name} id={student._id}/>
-              
+              <tr> 
+                    <th scope="row">{student._id}</th>
+                    <td>{student.name}</td>
+                    <td>
+                        <button className="btn btn-danger" value={student._id} onClick={this.deleteStudentHandler}>Excluir</button>
+                    </td>
+                </tr>              
             ))
           }
         </tbody>
