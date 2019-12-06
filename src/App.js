@@ -8,7 +8,7 @@ import Students from './components/Students';
 import Periods from './components/Periods';
 import PeriodDetail from './components/PeriodDetail';
 
-import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
+import {BrowserRouter as Router, Route} from 'react-router-dom';
 import HomeDash  from './components/homeItems/HomeDash';
 import ClassTeams from './components/ClassTeams';
 import ClassTeam from './components/detail/ClassTeam';

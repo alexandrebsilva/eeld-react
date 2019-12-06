@@ -12,6 +12,7 @@ class PeriodDetail extends React.Component {
       classTeamsOfPeriod:[],
       subjectOfThePeriod:{},
       teacherOfThePeriod:{},
+      sessions:[],
 
       allClassTeamsAvailable:[],
       allTeachersAvailable:[],
@@ -43,6 +44,7 @@ class PeriodDetail extends React.Component {
     api.get('/periods/'+this.state.periodo_id).then((resp) => {
       this.setState({details:resp.data});
       this.setState({classTeamsOfPeriod:this.state.details.classTeams})
+      //console.log(this.state.details.classTeams)
     })
   }
   getAllTeachers = ()=>{
@@ -53,21 +55,35 @@ class PeriodDetail extends React.Component {
 
   getAllSubjects = ()=>{
     api.get('/allSubjects').then(
-      (resp) => {this.setState({allSubjectsAvailable:resp.data})}
+      (resp) => {
+        this.setState({allSubjectsAvailable:resp.data})
+        console.log(resp.data)
+      }
     )
   }
-  getClassTeamsInfo = () => {
-    this.state.details.classTeams.map((classTeam)=>{
-      //console.log(classTeam)
-    })
+  
+  getSessionsById = () => {
+    api.get('/sessions/period/'+this.state.periodo_id).then(
+      (resp) => {
+        this.setState({sessions:resp.data})
+        console.log(resp.data)
+      }
+    )
   }
-
+  
+  removeSession = (event) => {
+    api.delete('/sessions/'+event.target.value)
+    this.forceUpdate();
+    console.log(event.target.value + ' sessao excluida')
+  }
   componentDidMount(){
+    this.getSessionsById();
     this.getPeriodDetail();
     this.getAllClassTeams();
     this.getClassTeamsOfPeriod();
     this.getAllTeachers();
     this.getAllSubjects();
+    //console.log(this.state.sessions)
   }
 
 changeClassTeam = (event) =>{
@@ -81,21 +97,18 @@ changeSubject = (event) => {
 }
 
 createAula = () => {
-  api.post('/periods/addClassTeam',{
-    period_id:this.state.periodo_id, 
-    classTeam_id:this.state.newClassTeam
-  });
-  api.post('/periods/addSubject',{
-    period_id:this.state.periodo_id, 
-    subject_id:this.state.newSubject
-  });
-  api.post('/periods/addTeacher',{
-    period_id:this.state.periodo_id, 
-    teacher_id:this.state.newTeacher
-  });
-  /*console.log(this.state.newClassTeam);
-  console.log(this.state.newTeacher);
-  console.log(this.state.newSubject);*/
+  console.log(this.state.newClassTeam)
+  api.post('/sessions',{
+    periodo_id:this.state.periodo_id,
+    teacher:this.state.newTeacher,
+    classTeam:this.state.newClassTeam,
+    subject:this.state.newSubject,
+  }).then(
+      (resp)=>{console.log(resp)
+    })
+  this.setState({newTeacher:''})
+  this.setState({newClassTeam:''})
+  this.setState({newSubject:''})
 }
     render() {
       return(
@@ -108,7 +121,7 @@ createAula = () => {
                 <option></option>
                 {
                   this.state.allClassTeamsAvailable.map((classTeam)=>(
-                    <option value={classTeam._id}>{classTeam.name}</option>
+                    <option key={classTeam.name} value={classTeam.name}>{classTeam.name}</option>
                   ))
                 }
               </select>
@@ -119,7 +132,7 @@ createAula = () => {
                 <option></option>
                 {
                   this.state.allTeachersAvailable.map((classTeam)=>(
-                    <option value={classTeam._id}>{classTeam.name}</option>
+                    <option key={classTeam.name} value={classTeam.name}>{classTeam.name}</option>
                   ))
                 }
               </select>
@@ -130,7 +143,7 @@ createAula = () => {
                 <option></option>
                 {
                   this.state.allSubjectsAvailable.map((classTeam)=>(
-                    <option value={classTeam._id}>{classTeam.name}</option>
+                    <option key={classTeam.name} value={classTeam.name}>{classTeam.name}</option>
                   ))
                 }
               </select>
@@ -147,10 +160,24 @@ createAula = () => {
                 <th scope="col">Turno</th>
                 <th scope="col">Turma</th>
                 <th scope="col">Professor</th>
+                <th scope="col">Materia</th>
                 <th scope="col">Ação</th>
               </tr>
             </thead>
             <tbody>
+            {
+                  this.state.sessions.map((session)=>(
+                    <tr>
+                  <th scope="row">{this.state.details.order}</th>
+                  <td>{session.classTeam}</td>
+                  <td>{session.teacher}</td>
+                  <td>{session.subject}</td>
+                        <td>
+                            <button className="btn btn-danger" onClick={this.removeSession} value={session._id}>Remover da aula</button>
+                        </td>
+                    </tr>
+                  ))
+                }
             
         </tbody>
       </table>
@@ -159,3 +186,12 @@ createAula = () => {
     }
   }
   export default PeriodDetail
+  /*{
+            this.state.sessions.map((session)=>(<tr>
+                        <th scope="row"></th>
+                        <td></td>
+                        <td>
+                            <button className="btn btn-danger"  value={this.state.periodo_id}>Remover da aula</button>
+                        </td>
+                    </tr>
+            ))} */

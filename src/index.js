@@ -3,14 +3,7 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
-import Subjects from './components/Subjects';
-import Teachers from './components/Teachers';
-import Students from './components/Students';
-import Periods from './components/Periods';
-
-
-import { BrowserRouter, Switch, Route } from 'react-router-dom'
-ReactDOM.render(<App></App>
+ReactDOM.render(<App/>
     , document.getElementById('root'));
 
 
