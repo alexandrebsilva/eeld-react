@@ -27,7 +27,11 @@ class ClassTeamDetail extends React.Component {
 
   
   getStudents = () =>{
-    let addedStudents = [];
+    api.get('/classTeams/availableStudents/'+this.props.match.params.id).then((resp)=>{
+      this.setState({allStudents:resp.data})
+
+    });
+    /*let addedStudents = [];
     let allStudents = [];
     let availableStudents = [];
     api.get('/allStudents').then((resp)=>{
@@ -40,11 +44,9 @@ class ClassTeamDetail extends React.Component {
       addedStudents = resp.data.students;
       console.log('alunos added')
       console.log(addedStudents)
-    });
-      
+    });*/
     
     
-
   }
 
   
@@ -68,6 +70,7 @@ class ClassTeamDetail extends React.Component {
           student_id:event.target.value, classTeam_id:this.state.id_turma 
         }).then((resp)=>{
           this.getStudentsOfClassTeam();
+          this.getStudents();
         })
       }
 
@@ -80,7 +83,7 @@ class ClassTeamDetail extends React.Component {
     deleteStudent = (event) =>{
       api.post('/classTeams/removeStudent', {student_id:event.target.value,classTeam_id:this.state.id_turma }).then(
         (resp)=>{
-        
+        this.getStudents()
         this.getStudentsOfClassTeam();
       })
      
@@ -107,7 +110,7 @@ class ClassTeamDetail extends React.Component {
         head = <p className="bg-danger text-light">Turma lotada - Impossivel add mais alunos nessa turma</p>
       }
 
-      
+
       
         return <div>
               <h2>Alunos da turma</h2>
