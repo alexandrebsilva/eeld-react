@@ -29,14 +29,17 @@ class HomeDash extends React.Component {
       .then((resp) => {
         this.setState({ totalPeriodo: resp.data.total })
       });
+
     api.get('/subjects')
       .then((resp) => {
         this.setState({ totalDisciplina: resp.data.total })
       });
+
     api.get('/students')
       .then((resp) => {
         this.setState({ totalAluno: resp.data.total })
       });
+
     api.get('/teachers')
       .then((resp) => {
         this.setState({ totalProfessor: resp.data.total })
