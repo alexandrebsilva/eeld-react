@@ -6,66 +6,66 @@ class Periods extends React.Component {
 
   //nessa requisição se define a pagina para exibir
   getAllPeriods = (page = 1) => {
-    api.get('/allPeriods').then((resp)=>{
+    api.get('/periods/allPeriods').then((resp) => {
       console.log(resp)
-        this.setState({periods:resp.data});
-      }
+      this.setState({ periods: resp.data });
+    }
     )
   }
-  componentDidMount(){
+  componentDidMount() {
     this.getAllPeriods();
-    
+
   }
   state = {
-    periods:[],
-    newPeriodInicio:'',
-    newPeriodFim:'',
-    order:''
+    periods: [],
+    newPeriodInicio: '',
+    newPeriodFim: '',
+    order: ''
   }
   onTypeInicio = (event) => {
-    this.setState({newPeriodInicio:event.target.value})
+    this.setState({ newPeriodInicio: event.target.value })
     console.log(this.state)
   }
 
   onTypeFim = (event) => {
-    this.setState({newPeriodFim:event.target.value})
+    this.setState({ newPeriodFim: event.target.value })
     console.log(this.state)
   }
-  
+
   onTypeOrder = (event) => {
-    this.setState({order:event.target.value})
+    this.setState({ order: event.target.value })
     console.log(this.state)
   }
 
   savePeriodHandler = (event) => {
     event.preventDefault();
-    api.post('/periods',{
-      order:this.state.order,
-      beginTime:this.state.newPeriodInicio,
-      finishTime:this.state.newPeriodFim,
+    api.post('/periods', {
+      order: this.state.order,
+      beginTime: this.state.newPeriodInicio,
+      finishTime: this.state.newPeriodFim,
     }).then(
-      ()=>{
-        this.setState({newPeriodInicio:''});
-        this.setState({newPeriodFim:''});
-        this.setState({order:''});
-        this.getAllPeriods(); 
+      () => {
+        this.setState({ newPeriodInicio: '' });
+        this.setState({ newPeriodFim: '' });
+        this.setState({ order: '' });
+        this.getAllPeriods();
       }
     )
   }
 
-  deletePeriodHandler = (event) =>{
-    api.delete('/periods/'+event.target.value).then(
-      ()=>{
+  deletePeriodHandler = (event) => {
+    api.delete('/periods/' + event.target.value).then(
+      () => {
         this.getAllPeriods();
       }
     )
-}
+  }
 
- 
+
   render() {
     console.log(this.state)
     return <div>
-      <hr/>
+      <hr />
       <h2>
         Periodos
       </h2>
@@ -85,21 +85,21 @@ class Periods extends React.Component {
           </tr>
         </thead>
         <tbody>
-        {
-        this.state.periods.map((period)=>(
-                <tr> 
-                    <th scope="row">{period._id}</th>
-                    <td>{period.order}</td>
-                    <td>{period.beginTime}</td>
-                    <td>{period.finishTime}</td>
-                    <td>
-                        <button className="btn btn-danger" value={period._id} onClick={this.deletePeriodHandler}>Excluir</button>
-                        <a href={'/periodos/'+period._id} className=" ml-1 btn btn-success">Visualizar</a>
-                    </td>
-                </tr>
-                
-          ))
-      }
+          {
+            this.state.periods.map((period) => (
+              <tr>
+                <th scope="row">{period._id}</th>
+                <td>{period.order}</td>
+                <td>{period.beginTime}</td>
+                <td>{period.finishTime}</td>
+                <td>
+                  <button className="btn btn-danger" value={period._id} onClick={this.deletePeriodHandler}>Excluir</button>
+                  <a href={'/periodos/' + period._id} className=" ml-1 btn btn-success">Visualizar</a>
+                </td>
+              </tr>
+
+            ))
+          }
         </tbody>
       </table>
     </div>;

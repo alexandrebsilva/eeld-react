@@ -48,13 +48,13 @@ class PeriodDetail extends React.Component {
     })
   }
   getAllTeachers = () => {
-    api.get('/allTeachers').then(
+    api.get('/teachers/allTeachers').then(
       (resp) => { this.setState({ allTeachersAvailable: resp.data }) }
     )
   }
 
   getAllSubjects = () => {
-    api.get('/allSubjects').then(
+    api.get('/subjects/allSubjects').then(
       (resp) => {
         this.setState({ allSubjectsAvailable: resp.data })
         console.log(resp.data)

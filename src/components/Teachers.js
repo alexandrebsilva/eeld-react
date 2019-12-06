@@ -6,49 +6,49 @@ class Teachers extends React.Component {
 
   //nessa requisição se define a pagina para exibir
   getAllTeachers = (page = 1) => {
-    api.get('/allTeachers').then((resp)=>{
+    api.get('/teachers/allTeachers').then((resp) => {
       console.log(resp)
-        this.setState({teachers:resp.data});
-      }
+      this.setState({ teachers: resp.data });
+    }
     )
   }
-  componentDidMount(){
+  componentDidMount() {
     this.getAllTeachers();
   }
 
   state = {
-    teachers:[],
-    newTeacherName:''
+    teachers: [],
+    newTeacherName: ''
   }
 
   onTypeName = (event) => {
-    this.setState({newTeacherName:event.target.value})
+    this.setState({ newTeacherName: event.target.value })
     console.log(this.state)
   }
 
   saveTeacherHandler = (event) => {
     event.preventDefault();
-    api.post('/teachers',{
-      name:this.state.newTeacherName
+    api.post('/teachers', {
+      name: this.state.newTeacherName
     }).then(
-      ()=>{
-        this.setState({newTeacherName:''});
-        this.getAllTeachers(); 
+      () => {
+        this.setState({ newTeacherName: '' });
+        this.getAllTeachers();
       }
     )
   }
-  deleteTeacherHandler = (event) =>{
-    api.delete('/teachers/'+event.target.value).then(
+  deleteTeacherHandler = (event) => {
+    api.delete('/teachers/' + event.target.value).then(
       () => {
         this.getAllTeachers();
       }
     );
-}
+  }
 
   render() {
     console.log(this.state)
     return <div>
-      <hr/>
+      <hr />
       <h2>Professores</h2>
       <form>
         <input placeholder="Nome do Professor" name="name" onChange={this.onTypeName} value={this.state.newTeacherName}></input>
@@ -63,17 +63,17 @@ class Teachers extends React.Component {
           </tr>
         </thead>
         <tbody>
-        {
-        this.state.teachers.map((teacher)=>(
-          <tr> 
-                    <th scope="row">{teacher._id}</th>
-                    <td>{teacher.name}</td>
-                    <td>
-                        <button className="btn btn-danger" value={teacher._id} onClick={this.deleteTeacherHandler}>Excluir</button>
-                    </td>
-                </tr>
-        ))
-      }
+          {
+            this.state.teachers.map((teacher) => (
+              <tr>
+                <th scope="row">{teacher._id}</th>
+                <td>{teacher.name}</td>
+                <td>
+                  <button className="btn btn-danger" value={teacher._id} onClick={this.deleteTeacherHandler}>Excluir</button>
+                </td>
+              </tr>
+            ))
+          }
         </tbody>
       </table>
     </div>;

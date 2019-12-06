@@ -6,45 +6,45 @@ class Subjects extends React.Component {
 
   //nessa requisição se define a pagina para exibir
   getAllSubjects = (page = 1) => {
-    api.get('/allSubjects').then((resp)=>{
+    api.get('/subjects/allSubjects').then((resp) => {
       console.log(resp)
-        this.setState({subjects:resp.data});
-      }
+      this.setState({ subjects: resp.data });
+    }
     )
   }
-  componentDidMount(){
+  componentDidMount() {
     this.getAllSubjects();
-    
+
   }
   state = {
-    subjects:[],
-    newSubjectName:''
+    subjects: [],
+    newSubjectName: ''
   }
   onTypeName = (event) => {
-    this.setState({newSubjectName:event.target.value})
+    this.setState({ newSubjectName: event.target.value })
     console.log(this.state)
   }
   saveSubjectHandler = (event) => {
     event.preventDefault();
-    api.post('/subjects',{
-      name:this.state.newSubjectName
+    api.post('/subjects', {
+      name: this.state.newSubjectName
     }).then(
-      (resp)=>{
-        this.setState({newSubjectName:''});
-        this.getAllSubjects(); 
+      (resp) => {
+        this.setState({ newSubjectName: '' });
+        this.getAllSubjects();
       }
     )
   }
 
-  deleteSubjectHandler = (event) =>{
-    api.delete('/subjects/'+event.target.value).then((resp)=>{
+  deleteSubjectHandler = (event) => {
+    api.delete('/subjects/' + event.target.value).then((resp) => {
       this.getAllSubjects();
     })
-    
+
     //isso nao pode nunca acontecer
     //window.location.reload();
-}
- 
+  }
+
   render() {
     console.log(this.state.subjects)
     return <div>
@@ -61,17 +61,17 @@ class Subjects extends React.Component {
           </tr>
         </thead>
         <tbody>
-        {
-        this.state.subjects.map((subject)=>(
-          <tr> 
-                    <th scope="row">{subject._id}</th>
-                    <td>{subject.name}</td>
-                    <td>
-                        <button className="btn btn-danger" value={subject._id} onClick={this.deleteSubjectHandler}>Excluir</button>
-                    </td>
-                </tr>
-        ))
-      }
+          {
+            this.state.subjects.map((subject) => (
+              <tr>
+                <th scope="row">{subject._id}</th>
+                <td>{subject.name}</td>
+                <td>
+                  <button className="btn btn-danger" value={subject._id} onClick={this.deleteSubjectHandler}>Excluir</button>
+                </td>
+              </tr>
+            ))
+          }
         </tbody>
       </table>
     </div>;
