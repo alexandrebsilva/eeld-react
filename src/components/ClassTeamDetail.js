@@ -31,22 +31,6 @@ class ClassTeamDetail extends React.Component {
       this.setState({ allStudents: resp.data })
 
     });
-    /*let addedStudents = [];
-    let allStudents = [];
-    let availableStudents = [];
-    api.get('/allStudents').then((resp)=>{
-      allStudents = resp.data;
-      console.log('todos alunos')
-      console.log(allStudents)
-      this.setState({allStudents:resp.data})
-    });
-    api.get('/classTeams/'+this.state.id_turma).then((resp)=>{
-      addedStudents = resp.data.students;
-      console.log('alunos added')
-      console.log(addedStudents)
-    });*/
-
-
   }
 
 

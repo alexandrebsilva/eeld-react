@@ -34,7 +34,7 @@ class PeriodDetail extends React.Component {
   }
 
   getAllClassTeams = () => {
-    api.get('/allClassTeams').then((resp) => {
+    api.get('/classTeams/allClassTeams').then((resp) => {
       this.setState({ allClassTeamsAvailable: resp.data })
       //console.log(resp.data)
     })
@@ -193,7 +193,6 @@ class PeriodDetail extends React.Component {
                 </tr>
               ))
             }
-
           </tbody>
         </table>
       </div>
@@ -201,12 +200,3 @@ class PeriodDetail extends React.Component {
   }
 }
 export default PeriodDetail
-  /*{
-      this.state.sessions.map((session)=>(<tr>
-                  <th scope="row"></th>
-                  <td></td>
-                  <td>
-                      <button className="btn btn-danger"  value={this.state.periodo_id}>Remover da aula</button>
-                  </td>
-              </tr>
-      ))} */

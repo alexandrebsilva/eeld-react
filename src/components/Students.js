@@ -13,44 +13,44 @@ class Students extends React.Component {
     )
   }*/
   getAllStudents = () => {
-    api.get('/allStudents').then((resp)=>{
-        this.setState({students:resp.data});
-      }
+    api.get('/students/allStudents').then((resp) => {
+      this.setState({ students: resp.data });
+    }
     )
   }
-  componentDidMount(){
+  componentDidMount() {
     this.getAllStudents();
-    
+
   }
   state = {
-    students:[],
-    newStudentName:''
+    students: [],
+    newStudentName: ''
   }
   onTypeName = (event) => {
-    this.setState({newStudentName:event.target.value})
+    this.setState({ newStudentName: event.target.value })
     console.log(this.state)
   }
   saveStudentHandler = (event) => {
     event.preventDefault();
-    api.post('students',{
-      name:this.state.newStudentName
+    api.post('students', {
+      name: this.state.newStudentName
     }).then(
-      ()=>{
-        this.setState({newStudentName:''});
-        this.getAllStudents(); 
+      () => {
+        this.setState({ newStudentName: '' });
+        this.getAllStudents();
       }
     )
   }
-  deleteStudentHandler = (event) =>{
-    api.delete('/students/'+event.target.value).then(
-      ()=>{
-        this.getAllStudents(); 
+  deleteStudentHandler = (event) => {
+    api.delete('/students/' + event.target.value).then(
+      () => {
+        this.getAllStudents();
       }
     )
-}
+  }
   render() {
     return <div>
-      <hr/>
+      <hr />
       <h2>Alunos</h2>
       <form>
         <input placeholder="Nome do aluno" name="name" onChange={this.onTypeName} value={this.state.newStudentName}></input>
@@ -66,14 +66,14 @@ class Students extends React.Component {
         </thead>
         <tbody>
           {
-            this.state.students.map((student)=>(
-              <tr> 
-                    <th scope="row">{student._id}</th>
-                    <td>{student.name}</td>
-                    <td>
-                        <button className="btn btn-danger" value={student._id} onClick={this.deleteStudentHandler}>Excluir</button>
-                    </td>
-                </tr>              
+            this.state.students.map((student) => (
+              <tr>
+                <th scope="row">{student._id}</th>
+                <td>{student.name}</td>
+                <td>
+                  <button className="btn btn-danger" value={student._id} onClick={this.deleteStudentHandler}>Excluir</button>
+                </td>
+              </tr>
             ))
           }
         </tbody>

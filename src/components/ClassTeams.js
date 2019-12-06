@@ -4,47 +4,47 @@ import api from '../services/api';
 class ClassTeams extends React.Component {
 
   getAllClassTeams = () => {
-    api.get('/allClassTeams').
-      then((resp)=>{
+    api.get('/classTeams/allClassTeams').
+      then((resp) => {
         console.log(resp.data)
-        this.setState({classTeams:resp.data});
+        this.setState({ classTeams: resp.data });
       }
-    )
+      )
   }
 
-  componentDidMount(){
+  componentDidMount() {
     this.getAllClassTeams();
     console.log(this.state)
   }
 
   state = {
-    classTeams:[],
-    newClassTeamName:'',
-    students:[]
+    classTeams: [],
+    newClassTeamName: '',
+    students: []
   }
   onTypeName = (event) => {
-    this.setState({newClassTeamName:event.target.value})
+    this.setState({ newClassTeamName: event.target.value })
     console.log(this.state)
   }
   saveClassTeamHandler = (event) => {
     event.preventDefault();
-    api.post('/classTeams',{
-      name:this.state.newClassTeamName
+    api.post('/classTeams', {
+      name: this.state.newClassTeamName
     }).then(
       () => {
-        this.setState({newClassTeamName:''});
-        this.getAllClassTeams(); 
+        this.setState({ newClassTeamName: '' });
+        this.getAllClassTeams();
       }
     )
   }
 
-  deleteClassTeamHandler = (event) =>{
-    api.delete('/classTeams/'+event.target.value).then(
-      ()=>{
+  deleteClassTeamHandler = (event) => {
+    api.delete('/classTeams/' + event.target.value).then(
+      () => {
         this.getAllClassTeams();
       }
     )
-}
+  }
 
   render() {
     return <div>
@@ -62,15 +62,15 @@ class ClassTeams extends React.Component {
         </thead>
         <tbody>
           {
-            this.state.classTeams.map((classTeam)=>(
-              <tr key={classTeam._id}> 
-                    <th scope="row">{classTeam._id}</th>
-                    <td>{classTeam.name}</td>
-                    <td>
-                        <button className="btn btn-danger" value={classTeam._id} onClick={this.deleteClassTeamHandler}>Excluir</button>
-                        <a href={'/turmas/'+classTeam._id}  className=" ml-1 btn btn-success">Visualizar</a>
-                    </td>
-                </tr>
+            this.state.classTeams.map((classTeam) => (
+              <tr key={classTeam._id}>
+                <th scope="row">{classTeam._id}</th>
+                <td>{classTeam.name}</td>
+                <td>
+                  <button className="btn btn-danger" value={classTeam._id} onClick={this.deleteClassTeamHandler}>Excluir</button>
+                  <a href={'/turmas/' + classTeam._id} className=" ml-1 btn btn-success">Visualizar</a>
+                </td>
+              </tr>
 
             ))
           }
