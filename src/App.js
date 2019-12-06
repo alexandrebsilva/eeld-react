@@ -11,7 +11,7 @@ import PeriodDetail from './components/PeriodDetail';
 import {BrowserRouter as Router, Route} from 'react-router-dom';
 import HomeDash  from './components/homeItems/HomeDash';
 import ClassTeams from './components/ClassTeams';
-import ClassTeam from './components/detail/ClassTeam';
+import ClassTeam from './components/ClassTeamDetail';
 
 //import Example from './components/Example';
 

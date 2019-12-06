@@ -1,5 +1,4 @@
 import React from 'react';
-import ClassTeamItem from './ListItems/ClassTeamItem'
 import api from '../services/api';
 
 class ClassTeams extends React.Component {

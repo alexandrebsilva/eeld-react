@@ -1,5 +1,4 @@
 import React from 'react';
-import PeriodItem from './ListItems/PeriodItem'
 import api from '../services/api';
 
 class Periods extends React.Component {
@@ -27,6 +26,7 @@ class Periods extends React.Component {
     this.setState({newPeriodInicio:event.target.value})
     console.log(this.state)
   }
+  
   onTypeFim = (event) => {
     this.setState({newPeriodFim:event.target.value})
     console.log(this.state)
@@ -36,7 +36,6 @@ class Periods extends React.Component {
     this.setState({order:event.target.value})
     console.log(this.state)
   }
-  
 
   savePeriodHandler = (event) => {
     event.preventDefault();
@@ -54,6 +53,15 @@ class Periods extends React.Component {
     )
   }
 
+  deletePeriodHandler = (event) =>{
+    api.delete('/periods/'+event.target.value).then(
+      ()=>{
+        this.getAllPeriods();
+      }
+    )
+    //window.location.reload();
+}
+
  
   render() {
     console.log(this.state)
@@ -64,7 +72,7 @@ class Periods extends React.Component {
       </h2>
       <form>
         <input placeholder="Hora inicial" name="name" onChange={this.onTypeInicio} value={this.state.newPeriodInicio}></input>
-        <input placeholder="Hora inicial" name="name" onChange={this.onTypeFim} value={this.state.newPeriodFim}></input>
+        <input placeholder="Hora final" name="name" onChange={this.onTypeFim} value={this.state.newPeriodFim}></input>
         <input placeholder="Ordem cronologica (1,2,...)" name="name" onChange={this.onTypeOrder} value={this.state.order}></input>
         <button onClick={this.savePeriodHandler}>Cadastrar</button>
       </form>
@@ -80,8 +88,18 @@ class Periods extends React.Component {
         <tbody>
         {
         this.state.periods.map((period)=>(
-          <PeriodItem key={period._id} inicio={period.beginTime} fim={period.finishTime} order={period.order} id={period._id}/>
-        ))
+                <tr> 
+                    <th scope="row">{period._id}</th>
+                    <td>{period.order}</td>
+                    <td>{period.beginTime}</td>
+                    <td>{period.finishTime}</td>
+                    <td>
+                        <button className="btn btn-danger" value={period._id} onClick={this.deletePeriodHandler}>Excluir</button>
+                        <a href={'/periodos/'+period._id} className=" ml-1 btn btn-success">Visualizar</a>
+                    </td>
+                </tr>
+                
+          ))
       }
         </tbody>
       </table>
@@ -90,20 +108,3 @@ class Periods extends React.Component {
 }
 
 export default Periods;
-/*
-<table className="table">
-        <thead>
-          <tr>
-            <th scope="col">ID</th>
-            <th scope="col">Nome Turma</th>
-            <th scope="col">Ações</th>
-          </tr>
-        </thead>
-        <tbody>
-          {
-            this.state.classTeams.map((classTeam)=>(
-              <ClassTeamItem key={classTeam._id} name={classTeam.name} id={classTeam._id}/>
-            ))
-          }
-        </tbody>
-      </table>*/
