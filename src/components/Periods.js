@@ -58,13 +58,17 @@ class Periods extends React.Component {
   render() {
     console.log(this.state)
     return <div>
+      <hr/>
+      <h2>
+        Periodos
+      </h2>
       <form>
         <input placeholder="Hora inicial" name="name" onChange={this.onTypeInicio} value={this.state.newPeriodInicio}></input>
         <input placeholder="Hora inicial" name="name" onChange={this.onTypeFim} value={this.state.newPeriodFim}></input>
         <input placeholder="Ordem cronologica (1,2,...)" name="name" onChange={this.onTypeOrder} value={this.state.order}></input>
         <button onClick={this.savePeriodHandler}>Cadastrar</button>
       </form>
-      <table classInicio="table">
+      <table className="table">
         <thead>
           <tr>
             <th scope="col">ID</th>
@@ -86,10 +90,20 @@ class Periods extends React.Component {
 }
 
 export default Periods;
-
-/*{
-  this.state.periods.map((period)=>(
-    <PeriodItem key={period._id} name={period.name} id={period._id}/>
-    
-  ))
-}*/
+/*
+<table className="table">
+        <thead>
+          <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Nome Turma</th>
+            <th scope="col">Ações</th>
+          </tr>
+        </thead>
+        <tbody>
+          {
+            this.state.classTeams.map((classTeam)=>(
+              <ClassTeamItem key={classTeam._id} name={classTeam.name} id={classTeam._id}/>
+            ))
+          }
+        </tbody>
+      </table>*/

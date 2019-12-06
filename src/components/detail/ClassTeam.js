@@ -57,6 +57,7 @@ class ClassTeam extends React.Component {
   }
     render (){
       //renderiza o cadastro apenas se o numero de alunos for menor ou igual a 12
+      
       let head;  
       if(this.state.studentsOfTheClassTeam.length<12){
         head = <div>

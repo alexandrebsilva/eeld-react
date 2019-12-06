@@ -38,6 +38,8 @@ class Students extends React.Component {
 
   render() {
     return <div>
+      <hr/>
+      <h2>Alunos</h2>
       <form>
         <input placeholder="Nome do aluno" name="name" onChange={this.onTypeName} value={this.state.newStudentName}></input>
         <button onClick={this.saveStudentHandler}>Cadastrar</button>

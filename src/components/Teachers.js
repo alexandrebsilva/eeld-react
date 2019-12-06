@@ -42,6 +42,8 @@ class Teachers extends React.Component {
   render() {
     console.log(this.state)
     return <div>
+      <hr/>
+      <h2>Professores</h2>
       <form>
         <input placeholder="Nome do Professor" name="name" onChange={this.onTypeName} value={this.state.newTeacherName}></input>
         <button onClick={this.saveTeacherHandler}>Cadastrar</button>
@@ -58,7 +60,6 @@ class Teachers extends React.Component {
         {
         this.state.teachers.map((teacher)=>(
           <TeacherItem key={teacher._id} name={teacher.name} id={teacher._id}/>
-          
         ))
       }
         </tbody>
