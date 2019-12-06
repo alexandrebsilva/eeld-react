@@ -39,6 +39,14 @@ class ClassTeams extends React.Component {
     )
   }
 
+  deleteClassTeamHandler = (event) =>{
+    api.delete('/classTeams/'+event.target.value).then(
+      ()=>{
+        this.getAllClassTeams();
+      }
+    )
+}
+
   render() {
     return <div>
       <form>
@@ -56,7 +64,15 @@ class ClassTeams extends React.Component {
         <tbody>
           {
             this.state.classTeams.map((classTeam)=>(
-              <ClassTeamItem key={classTeam._id} name={classTeam.name} id={classTeam._id}/>
+              <tr key={classTeam._id}> 
+                    <th scope="row">{classTeam._id}</th>
+                    <td>{classTeam.name}</td>
+                    <td>
+                        <button className="btn btn-danger" value={classTeam._id} onClick={this.deleteClassTeamHandler}>Excluir</button>
+                        <a href={'/turmas/'+classTeam._id}  className=" ml-1 btn btn-success">Visualizar</a>
+                    </td>
+                </tr>
+
             ))
           }
         </tbody>

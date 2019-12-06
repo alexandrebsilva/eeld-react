@@ -18,5 +18,4 @@ class ClassTeamItem extends React.Component{
     }
 }
 
-
 export default ClassTeamItem;
